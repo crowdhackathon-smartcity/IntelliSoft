@@ -15,6 +15,8 @@ public class TextToSpeach : MonoBehaviour, IVirtualButtonEventHandler {
 	private GameObject _btn;
 
 	private GameObject _robot;
+	private GameObject _aek;
+	private GameObject _parthenon;
 
 	private bool show = true;
 
@@ -23,10 +25,13 @@ public class TextToSpeach : MonoBehaviour, IVirtualButtonEventHandler {
 		Audio = gameObject.GetComponent<AudioSource>();
 		_btn = GameObject.Find("VirtualButton");
 		_robot = GameObject.Find("RobotKyle");
+		_aek = GameObject.Find("AEK");
+		_parthenon = GameObject.Find("parthenon");
 		_btn.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
 		StartCoroutine(FindLocation());
 
 		distanceText = GameObject.Find("distanceText");
+		_aek.SetActive(false);
 	}
 
 	// Update is called once per frame
@@ -61,9 +66,8 @@ public class TextToSpeach : MonoBehaviour, IVirtualButtonEventHandler {
 	}
 
 	public void OnButtonPressed(VirtualButtonAbstractBehaviour vb) {
-		StartCoroutine(DownloadAudio("test"));
-		_robot.SetActive(!show);
-		show = !show;
+		//StartCoroutine(DownloadAudio("test"));
+		//_robot.SetActive(!show);
 	}
 
 	private GameObject distanceText;
@@ -109,6 +113,14 @@ public class TextToSpeach : MonoBehaviour, IVirtualButtonEventHandler {
 	}
 
 	public void OnButtonReleased(VirtualButtonAbstractBehaviour vb) {
+		show = !show;
 
+		if (show) {
+			_aek.SetActive(false);
+			_parthenon.SetActive(true);
+		} else {
+			_aek.SetActive(true);
+			_parthenon.SetActive(false);
+		}
 	}
 }
